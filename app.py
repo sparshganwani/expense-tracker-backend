@@ -7,7 +7,16 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={
+       r"/api/*": {
+           "origins": [
+               "http://localhost:3000",
+               "https://expense-tracker-frontend-six-sable.vercel.app"
+           ],
+           "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+           "allow_headers": ["Content-Type"]
+       }
+   })
 
 # Database configuration
 database_url = os.getenv('DATABASE_URL', 'sqlite:///expense_tracker.db')
